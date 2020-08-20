@@ -18,13 +18,14 @@ const Hero = () => {
           </div>
         )}
       </div>
-      <div className="heroNav">
+      {/* sticky navbar on hero element */}
+      {/* <div className="heroNav">
         <div className="heroNav__links">
           <div className="heroNav__item">POPULAR</div>
           <div className="heroNav__item">FRESH</div>
           <div className="heroNav__item">GALERY</div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

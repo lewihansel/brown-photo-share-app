@@ -15,8 +15,10 @@ const useImageUpload = (imageName, imageDesc, imageCamSetting, imageFile) => {
 
   useEffect(() => {
     //refrences
-    const storageRef = projectStorage.ref(imageFile.name);
-    const collectionRef = projectFirestore.collection("490px__image");
+    const storageRef = projectStorage.ref(
+      `490px/${user.uid}/${imageFile.name}`
+    );
+    const collectionRef = projectFirestore.collection("490px__images");
 
     //put file in storage
     storageRef.put(imageFile).on(
@@ -42,6 +44,7 @@ const useImageUpload = (imageName, imageDesc, imageCamSetting, imageFile) => {
         setImageUrl(url);
       }
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageCamSetting, imageDesc, imageFile, imageName]);
 
   return { progress, errorMsg, imageUrl };

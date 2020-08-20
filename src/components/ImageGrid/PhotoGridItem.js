@@ -1,19 +1,38 @@
-import React, { useState } from "react";
-import { IoIosHeartEmpty, IoIosClose } from "react-icons/io";
+import React, { useState, useEffect } from "react";
+import {
+  IoIosHeartEmpty,
+  IoMdPerson,
+  IoMdCamera,
+  IoMdArrowRoundBack,
+} from "react-icons/io";
 import { motion } from "framer-motion";
+import CapitalizeFirst from "../../utils/CapitalizeFirs";
 
 const PhotoGridItem = ({ photo }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
+  useEffect(() => {
+    modalOpen
+      ? window.addEventListener("keydown", handleEsc)
+      : window.removeEventListener("keydown", handleEsc);
+  });
+
+  const handleEsc = (e) => {
+    if (e.key === "Escape") {
+      setModalOpen(false);
+      document.body.style.overflowY = "";
+    }
+  };
+
   return (
-    <div layout key={photo.id} className="photoGrid__item">
+    <div key={photo.id} className="photoGrid__item">
       <div className="imageInfo">
         <div className="imageInfo__avatar">
           <img
-            src="https://dummyimage.com/30x30/e0e0e0/0011ff.jpg"
+            src={`https://ui-avatars.com/api/?name=${photo.uploadedBy}&size=30&background=DCDCDC&color=fff`}
             alt="avatar"
           />
-          <span>{photo.uploadedBy}</span>
+          <span>{CapitalizeFirst(photo.uploadedBy)}</span>
         </div>
         <div className="imageInfo__button">
           <IoIosHeartEmpty />
@@ -48,23 +67,28 @@ const PhotoGridItem = ({ photo }) => {
             <div className="photoModal__title">
               <img
                 className="photoModal__avatar"
-                src="https://dummyimage.com/80x80/e0e0e0/0011ff.jpg"
+                src={`https://ui-avatars.com/api/?name=${photo.uploadedBy}&size=80&background=DCDCDC&color=fff`}
                 alt="avatar"
               />
               <span className="photoModal__titleText">
                 <h2>{photo.imageName}</h2>
-                <span>{`by ${photo.uploadedBy}`}</span>
+                <span>
+                  <IoMdPerson />
+                  <span>{photo.uploadedBy}</span>
+                </span>
+
+                <span className="photoModal__camSetting">
+                  <IoMdCamera />
+                  <span>
+                    <small>{photo.imageCamSetting}</small>
+                  </span>
+                </span>
               </span>
             </div>
 
             <span className="photoModal__imageDescription">
-              <strong>Description: </strong>
-              {photo.imageDesc}
-            </span>
-
-            <span className="photoModal__imageDescription">
-              <strong>Camera Info: </strong>
-              {photo.imageCamSetting}
+              <strong>{photo.uploadedBy}</strong>
+              <span>{photo.imageDesc}</span>
             </span>
 
             <div
@@ -74,7 +98,7 @@ const PhotoGridItem = ({ photo }) => {
                 document.body.style.overflowY = "";
               }}
             >
-              <IoIosClose />
+              <IoMdArrowRoundBack />
             </div>
           </motion.div>
         </motion.div>

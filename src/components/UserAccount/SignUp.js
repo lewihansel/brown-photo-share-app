@@ -6,28 +6,30 @@ import {
   projectFirestore,
   timestamp,
 } from "../../config/firebase";
+import CapitalizeFirst from "../../utils/CapitalizeFirs";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userName, setUsername] = useState("");
+  const [displayName, setDisplayName] = useState("");
 
   const history = useHistory();
 
   const handleSignUp = (e) => {
     e.preventDefault();
     const createdAt = timestamp();
+    setDisplayName(CapitalizeFirst(displayName));
     projectAuth
       .createUserWithEmailAndPassword(email, password)
       .then((cred) => {
         projectFirestore.collection("users").doc(cred.user.uid).set({
           createDate: createdAt,
-          userName: userName,
+          displayName,
         });
       })
       .then(() => {
         projectAuth.currentUser.updateProfile({
-          displayName: userName,
+          displayName,
         });
       })
       .then(() => {
@@ -47,9 +49,9 @@ const SignUp = () => {
               required
               type="text"
               onChange={(e) => {
-                setUsername(e.target.value);
+                setDisplayName(e.target.value);
               }}
-              placeholder="username"
+              placeholder="your name"
             />
           </div>
 

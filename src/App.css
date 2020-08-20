@@ -52,16 +52,10 @@ nav {
   padding: 0 1rem;
 }
 
-.navbar__leftElement > svg {
-  font-size: 20px;
-  margin-left: 0.2rem;
-  padding: 0.4rem 0 0;
-}
-
 @media (min-width: 800px) {
   .navbar__leftElement {
     justify-content: space-between;
-    width: 400px;
+    width: 200px;
     padding: 0 2rem;
   }
 }
@@ -70,6 +64,12 @@ nav {
   font-family: "Poiret One", cursive;
   font-size: 28px;
   font-weight: 600;
+}
+
+.navbar__logo > svg {
+  font-size: 24px;
+  margin-left: 0.5rem;
+  padding: 0.4rem 0 0;
 }
 
 .navbar__dropdownButton {
@@ -92,7 +92,8 @@ nav {
   padding: 0.2rem 0.5rem;
   margin: 0 1.5rem;
   border-radius: 20px;
-  background-color: whitesmoke;
+  /* uncomment this for showing searchbar */
+  /* background-color: whitesmoke; */
 }
 
 @media (min-width: 800px) {
@@ -120,9 +121,9 @@ nav {
 }
 
 .navbar__rightElement {
-  width: 200px;
+  width: 260px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 0 1rem;
 }
 
@@ -158,16 +159,20 @@ nav {
   border: 2px solid;
   display: flex;
   align-items: center;
-  padding-right: 0.8rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 13px;
 }
 
 .navbar__logout > svg {
-  font-size: 16px;
+  font-size: 13px;
+  padding-top: 0.1rem;
   margin-left: 0.2rem;
 }
 
 .hero {
   padding: 2rem 1rem;
+  box-shadow: 0 4px 10px -9px rgba(0, 0, 0, 0.65);
+  padding-top: 1rem;
 }
 
 .hero__title {
@@ -360,51 +365,83 @@ nav {
   z-index: 41;
   display: grid;
   place-items: center;
+  overflow: auto;
 }
 
 .photoModal__Content {
   background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 20px 3rem;
-  max-width: 90%;
-  position: relative;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 90%;
+  max-height: 95%;
+  padding-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 800px) {
+  .photoModal__Content {
+    width: 80%;
+  }
 }
 
 .photoModal__closeButton {
-  position: absolute;
-  font-size: 1.5rem;
-  width: 28px;
-  height: 28px;
-  top: -4px;
-  left: -4px;
-  background-color: white;
+  position: fixed;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
   display: grid;
   place-items: center;
-  cursor: pointer;
-  border-radius: 50%;
   transition: all 0.1s ease;
+  z-index: 50;
+
+  font-size: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+  top: 2rem;
+  left: 0.5rem;
 }
 
 .photoModal__closeButton:hover {
-  color: var(--color-nav-hover);
-  top: -8px;
-  left: -8px;
-  width: 36px;
-  height: 36px;
-  font-size: 2rem;
+  color: black;
+  background-color: white;
+
+  width: 2.5rem;
+  height: 2.5rem;
+  top: 1.75rem;
+  left: 0.25rem;
+}
+
+@media (min-width: 800px) {
+  .photoModal__closeButton {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 2.5rem;
+    width: 3rem;
+    height: 3rem;
+    top: 3rem;
+    left: 2rem;
+  }
+
+  .photoModal__closeButton:hover {
+    width: 3.5rem;
+    height: 3.5rem;
+    top: 2.75rem;
+    left: 1.75rem;
+  }
 }
 
 .photoModal__Content > img {
-  max-width: 100%;
+  width: 100%;
 }
 
 .photoModal__title {
-  width: 100%;
+  width: 90%;
   display: flex;
-  margin-top: 2rem;
+  margin: 0 auto;
+  margin-top: 1.5rem;
   margin-bottom: 1rem;
 }
 
@@ -424,8 +461,28 @@ nav {
 }
 
 .photoModal__titleText > h2 {
-  margin-block-start: 0.2em;
-  margin-block-end: 0.2em;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.photoModal__titleText > span {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.photoModal__titleText > span > svg {
+  padding-top: 0.1rem;
+}
+
+.photoModal__titleText > span > span {
+  margin-left: 0.2rem;
+}
+
+@media (max-width: 800px) {
+  .photoModal__camSetting {
+    align-items: flex-start !important;
+  }
 }
 
 .photoModal__titleText > h2:hover,
@@ -434,8 +491,18 @@ nav {
 }
 
 .photoModal__imageDescription {
-  margin: 0 0 0;
-  width: 100%;
+  margin: 0 auto;
+  width: 90%;
+  margin-top: 0.1rem;
+  text-align: justify;
+}
+
+.photoModal__imageDescription > svg {
+  font-size: 25px;
+}
+
+.photoModal__imageDescription > span {
+  margin: 0 0.3rem;
 }
 
 .navbar__dropdownModal {
@@ -508,10 +575,12 @@ nav {
 
 .navbar__uploadForm {
   background-color: whitesmoke;
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 20px;
   display: flex;
   margin: 0 0 0.5rem;
+  border: none;
+  font-family: "Open Sans", sans-serif;
 }
 
 .navbar__uploadForm > svg {
@@ -532,7 +601,8 @@ nav {
 
 .navbar__uploadForm > input,
 .navbar__uploadForm > input:active,
-.navbar__dropdownUploadDescription > textarea:active {
+.navbar__uploadForm > textarea,
+.navbar__uploadForm > textarea:active {
   border: none;
   background-color: whitesmoke;
   outline: none;
@@ -571,7 +641,7 @@ nav {
 
 .btnDelete {
   color: darkred;
-  border-color: darkred;
+  border-color: darkred !important;
 }
 
 .btnDelete:hover {
@@ -633,6 +703,13 @@ nav {
   margin-top: 0.3rem;
   font-size: 14px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalButton > svg {
+  padding-top: 0.1rem;
 }
 
 .modalButton:hover {
@@ -678,9 +755,216 @@ nav {
   display: flex;
   margin: 1rem 0;
 }
+
+.signUp__consentCheckbox {
+  flex: 1;
+}
+
 .signUp__consentCheckbox > label {
   font-size: small;
+  flex: 2;
   margin-left: 0.2rem;
   text-align: justify;
   padding-right: 0.5rem;
+}
+
+.profileModal {
+  position: absolute;
+  top: 3rem;
+  background-color: white;
+  padding: 1rem 1rem 1.5rem;
+  border-radius: 10px;
+  transform: translateX(-25%);
+  box-shadow: var(--box-shadow-modal);
+  display: grid;
+  place-items: center;
+}
+
+.profileModal > img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.profileModal > img:hover {
+  filter: brightness(1.02);
+}
+
+.profileModal > strong {
+  font-size: 20px;
+  margin-top: 0.5rem;
+}
+
+.profileModal > span {
+  font-size: 15px;
+  font-style: italic;
+}
+
+.profileModalBtn {
+  margin-top: 1rem;
+  padding: 0.3rem 1rem;
+  justify-content: center;
+}
+
+.mobileDropdown > ul {
+  list-style: none;
+  padding-inline-start: 0;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.mobileDropdown > ul > li {
+  padding-top: 0.3rem;
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.mobileDropdown > ul > li > svg {
+  padding-top: 0.3rem;
+  margin-right: 0.5rem;
+}
+
+/* mobile upload dropdown */
+.mobileUpload__modal {
+  /* position: absolute; */
+  /* top: 3rem; */
+  /* width: 15rem; */
+  /* transform: translateX(-40%); */
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: white;
+  width: 90%;
+  margin: 0 auto;
+  /* box-shadow: var(--box-shadow-modal); */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 40;
+}
+
+.mobileUpload__modalInput {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 1rem;
+  margin: 0.5rem 1.2rem;
+  border-radius: 20px;
+  border: 2px solid black;
+  cursor: pointer;
+  width: 80%;
+}
+
+.mobileUpload__modalInput > svg {
+  font-size: 24px;
+  padding-top: 0.1rem;
+  margin: 0 0.3rem 0;
+}
+
+.mobileUpload__modalInput > span {
+  font-weight: 600;
+}
+
+.mobileUpload__modalInput > span > svg {
+  font-size: 14px;
+}
+
+.mobileUpload__modalInput:hover {
+  color: var(--color-nav-hover);
+  border-color: var(--color-nav-hover);
+}
+
+.mobileUpload__modalInput > input {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.mobileUpload__modalPreview {
+  width: 90%;
+  padding: 1rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mobileUpload__modalPreview > img {
+  width: 100%;
+}
+
+.mobileUpload__modalDescripton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.mobileForm {
+  background-color: whitesmoke;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  width: 80%;
+  display: flex;
+  border: none;
+  margin: 0 0 0.5rem;
+  font-family: "Open Sans", sans-serif;
+}
+
+.mobileForm > svg {
+  padding-top: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+.mobileForm > input,
+.mobileForm > textarea,
+.mobileForm > input:active,
+.mobileForm > textarea:active {
+  border: none;
+  flex: 1;
+  background-color: whitesmoke;
+  outline: none;
+  font-family: "Open Sans", sans-serif;
+}
+
+.mobileBtn {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 0.3rem 1rem;
+  width: 90%;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobileBtn > svg {
+  margin: 0 0.5rem;
+  padding-top: 0.1rem;
+  font-size: 18px;
+}
+
+.mobileBtn:hover,
+.mobileBtn:active {
+  color: var(--color-nav-hover);
+  border-color: var(--color-nav-hover);
+  outline: none;
+}
+
+.navbar__uploadLoading {
+  width: 100%;
+  display: flex;
+}
+
+.navbar__uploadLoading > div {
+  margin-top: 0.5rem;
+  height: 0.5rem;
+  border-radius: 5px;
+  background-color: var(--color-nav-hover);
 }

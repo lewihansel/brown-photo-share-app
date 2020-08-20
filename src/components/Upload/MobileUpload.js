@@ -1,11 +1,18 @@
 import React, { useState, useContext } from "react";
-import { IoIosCamera, IoMdImage, IoIosLogIn, IoIosQuote } from "react-icons/io";
-import { AiOutlineCloudUpload } from "react-icons/ai";
+import {
+  IoIosCloudUpload,
+  IoIosLogIn,
+  IoMdImage,
+  IoIosCamera,
+  IoIosQuote,
+} from "react-icons/io";
 import { FaTrashAlt } from "react-icons/fa";
-import ProgressBar from "./ProgressBar";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import ProgressBar from "../Upload/ProgressBar";
 import { UserContext } from "../../context/UserContext";
 
-const UploadModal = ({ setModalOpen }) => {
+const MobileUpload = ({ setMobileDropdown }) => {
+  //upload handler
   const [imagePreview, setImagePreview] = useState("");
   const [imageName, setImageName] = useState("");
   const [imageDesc, setImageDesc] = useState("");
@@ -33,10 +40,10 @@ const UploadModal = ({ setModalOpen }) => {
   };
 
   return (
-    <div className="navbar__dropdownModal">
+    <div className="mobileUpload__modal">
       {imagePreview && (
         <label
-          className="navbar__dropdownUploadInput btnDelete"
+          className="mobileUpload__modalInput btnDelete"
           onClick={() => {
             setImageFile(null);
             setImagePreview(null);
@@ -48,7 +55,7 @@ const UploadModal = ({ setModalOpen }) => {
         </label>
       )}
       {user && (
-        <label className="navbar__dropdownUploadInput">
+        <label className="mobileUpload__modalInput">
           <input type="file" onChange={previewUploadHandler} />
           {!imagePreview && <AiOutlineCloudUpload />}
           {!imagePreview && <span>Upload Image</span>}
@@ -57,23 +64,23 @@ const UploadModal = ({ setModalOpen }) => {
       )}
 
       {!user && (
-        <label className="navbar__dropdownUploadInput">
+        <label className="mobileUpload__modalInput">
           <IoIosLogIn />
           <span>Login to Upload</span>
         </label>
       )}
 
       {imagePreview && (
-        <div className="navbar__dropdownUploadPreview">
+        <div className="mobileUpload__modalPreview">
           <img src={imagePreview} alt="uploaded preview" />
         </div>
       )}
       {imagePreview && (
         <form
-          className="navbar__dropdownUploadDescription"
+          className="mobileUpload__modalDescripton"
           onSubmit={descriptionUploadHandler}
         >
-          <div className="navbar__uploadForm">
+          <div className="mobileForm">
             <IoMdImage />
             <input
               required
@@ -83,7 +90,7 @@ const UploadModal = ({ setModalOpen }) => {
               onChange={(e) => setImageName(e.target.value)}
             />
           </div>
-          <div className="navbar__uploadForm">
+          <div className="mobileForm">
             <IoIosQuote />
             <textarea
               required
@@ -93,7 +100,7 @@ const UploadModal = ({ setModalOpen }) => {
               onChange={(e) => setImageDesc(e.target.value)}
             />
           </div>
-          <div className="navbar__uploadForm">
+          <div className="mobileForm">
             <IoIosCamera />
             <input
               required
@@ -103,7 +110,8 @@ const UploadModal = ({ setModalOpen }) => {
               onChange={(e) => setImageCamSetting(e.target.value)}
             />
           </div>
-          <button className="navbar__dropdownUploadBtn" type="submit">
+          <button className="mobileBtn" type="submit">
+            <IoIosCloudUpload />
             Upload Image
           </button>
 
@@ -114,7 +122,7 @@ const UploadModal = ({ setModalOpen }) => {
               imageCamSetting={imageCamSetting}
               imageFile={imageFile}
               setLoading={setLoading}
-              setModalOpen={setModalOpen}
+              setModalOpen={setMobileDropdown}
             />
           )}
         </form>
@@ -123,4 +131,4 @@ const UploadModal = ({ setModalOpen }) => {
   );
 };
 
-export default UploadModal;
+export default MobileUpload;
