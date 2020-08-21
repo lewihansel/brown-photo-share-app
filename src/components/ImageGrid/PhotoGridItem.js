@@ -7,14 +7,31 @@ import {
 } from "react-icons/io";
 import { motion } from "framer-motion";
 import CapitalizeFirst from "../../utils/CapitalizeFirs";
+import { projectFirestore } from "../../config/firebase";
 
 const PhotoGridItem = ({ photo }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [userPhoto, setUserPhoto] = useState(
+    `https://ui-avatars.com/api/?name=${photo.uploadedBy}&size=30&background=DCDCDC&color=fff`
+  );
 
   useEffect(() => {
     modalOpen
       ? window.addEventListener("keydown", handleEsc)
       : window.removeEventListener("keydown", handleEsc);
+  }, [modalOpen]);
+
+  useEffect(() => {
+    const collectionRef = projectFirestore
+      .collection("users")
+      .doc(photo.userUid);
+
+    collectionRef.get().then((doc) => {
+      const userData = doc.data();
+      if (userData.profilePic) {
+        setUserPhoto(userData.profilePic);
+      }
+    });
   });
 
   const handleEsc = (e) => {
@@ -28,10 +45,7 @@ const PhotoGridItem = ({ photo }) => {
     <div key={photo.id} className="photoGrid__item">
       <div className="imageInfo">
         <div className="imageInfo__avatar">
-          <img
-            src={`https://ui-avatars.com/api/?name=${photo.uploadedBy}&size=30&background=DCDCDC&color=fff`}
-            alt="avatar"
-          />
+          <img src={userPhoto} alt="avatar" />
           <span>{CapitalizeFirst(photo.uploadedBy)}</span>
         </div>
         <div className="imageInfo__button">
@@ -67,7 +81,7 @@ const PhotoGridItem = ({ photo }) => {
             <div className="photoModal__title">
               <img
                 className="photoModal__avatar"
-                src={`https://ui-avatars.com/api/?name=${photo.uploadedBy}&size=80&background=DCDCDC&color=fff`}
+                src={userPhoto}
                 alt="avatar"
               />
               <span className="photoModal__titleText">

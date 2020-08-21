@@ -640,13 +640,13 @@ nav {
 }
 
 .btnDelete {
-  color: darkred;
+  color: darkred !important;
   border-color: darkred !important;
 }
 
 .btnDelete:hover {
-  color: red;
-  border-color: red;
+  color: red !important;
+  border-color: red !important;
 }
 
 .loginModal {
@@ -798,12 +798,24 @@ nav {
 .profileModal > span {
   font-size: 15px;
   font-style: italic;
+  margin-bottom: 0.5rem;
 }
 
 .profileModalBtn {
+  margin-top: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  cursor: pointer;
+}
+
+.profileModalBtn > input {
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.modalUploadPreview {
   margin-top: 1rem;
-  padding: 0.3rem 1rem;
-  justify-content: center;
 }
 
 .mobileDropdown > ul {

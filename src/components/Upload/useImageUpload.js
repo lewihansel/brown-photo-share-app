@@ -40,6 +40,7 @@ const useImageUpload = (imageName, imageDesc, imageCamSetting, imageFile) => {
           imageDesc,
           imageCamSetting,
           uploadedBy: user.displayName,
+          userUid: user.uid,
         });
         setImageUrl(url);
       }
