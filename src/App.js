@@ -5,28 +5,21 @@ import Home from "./components/Page/Home";
 import Staging from "./components/Page/StagingPage";
 import SignUp from "./components/UserAccount/SignUp";
 import UserContextProvider from "./context/UserContext";
+import GridContextProvider from "./context/GridContext";
 
 function App() {
-  // useEffect(() => {
-  //   projectAuth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       console.log(user);
-  //     } else {
-  //       console.log(`user logged out`);
-  //     }
-  //   });
-  // });
-
   return (
     <UserContextProvider>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/signup" component={SignUp} />
+      <GridContextProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/signup" component={SignUp} />
 
-          <Route path="/staging" component={Staging} />
-        </Switch>
-      </Router>
+            <Route path="/staging" component={Staging} />
+          </Switch>
+        </Router>
+      </GridContextProvider>
     </UserContextProvider>
   );
 }

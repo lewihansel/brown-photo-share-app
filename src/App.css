@@ -232,7 +232,8 @@ nav {
 }
 
 .heroNav__item:hover,
-.heroNav__item:active {
+.heroNav__item:active,
+.heroNav__selected {
   color: var(--color-nav-hover);
   border-bottom: 2px solid var(--color-nav-hover);
 }
@@ -347,12 +348,18 @@ nav {
     margin-left: 0.5rem;
   }
   .imageInfo__button {
-    font-size: 26px;
+    font-size: 20px;
+  }
+  .imageInfo__button > svg {
+    font-size: 22px;
+    padding-top: 0.2rem;
+    margin-right: 0.2rem;
   }
 }
 
-.imageInfo__button:hover > svg {
+.imageInfo__button:hover {
   color: white;
+  cursor: pointer;
 }
 
 .photoModal {
@@ -458,6 +465,9 @@ nav {
 
 .photoModal__titleText {
   margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .photoModal__titleText > h2 {
@@ -488,6 +498,32 @@ nav {
 .photoModal__titleText > h2:hover,
 .photoModal__titleText > span:hover {
   cursor: pointer;
+}
+
+.btn {
+  padding: 0.1rem 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  border-radius: 20px;
+  border: 2px solid black;
+}
+
+.btn > svg {
+  padding-top: 0.1rem;
+  margin-right: 0.2rem;
+}
+
+.btn:hover,
+.btn:active {
+  color: var(--color-nav-hover);
+  border-color: var(--color-nav-hover);
+  cursor: pointer;
+}
+
+.editPostBtn > svg {
+  padding-top: 0.15rem;
 }
 
 .photoModal__imageDescription {
@@ -840,16 +876,11 @@ nav {
 
 /* mobile upload dropdown */
 .mobileUpload__modal {
-  /* position: absolute; */
-  /* top: 3rem; */
-  /* width: 15rem; */
-  /* transform: translateX(-40%); */
   padding: 1rem;
   border-radius: 10px;
   background-color: white;
   width: 90%;
   margin: 0 auto;
-  /* box-shadow: var(--box-shadow-modal); */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -858,7 +889,6 @@ nav {
 
 .mobileUpload__modalInput {
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   padding: 0.25rem 1rem;

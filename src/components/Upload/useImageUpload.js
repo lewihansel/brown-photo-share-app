@@ -41,6 +41,8 @@ const useImageUpload = (imageName, imageDesc, imageCamSetting, imageFile) => {
           imageCamSetting,
           uploadedBy: user.displayName,
           userUid: user.uid,
+          likesCount: 0,
+          likedBy: [],
         });
         setImageUrl(url);
       }

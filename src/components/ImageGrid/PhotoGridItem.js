@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
-import {
-  IoIosHeartEmpty,
-  IoMdPerson,
-  IoMdCamera,
-  IoMdArrowRoundBack,
-} from "react-icons/io";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useContext } from "react";
+import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
 import CapitalizeFirst from "../../utils/CapitalizeFirs";
-import { projectFirestore } from "../../config/firebase";
+import { projectFirestore, timestamp } from "../../config/firebase";
+import PhotoModal from "./PhotoModal";
+import { UserContext } from "../../context/UserContext";
 
 const PhotoGridItem = ({ photo }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [userPhoto, setUserPhoto] = useState(
     `https://ui-avatars.com/api/?name=${photo.uploadedBy}&size=30&background=DCDCDC&color=fff`
   );
+  const [liked, setLiked] = useState(false);
+
+  const user = useContext(UserContext);
 
   useEffect(() => {
     modalOpen
@@ -41,6 +40,40 @@ const PhotoGridItem = ({ photo }) => {
     }
   };
 
+  const addLikes = () => {
+    const collectionRef = projectFirestore
+      .collection("490px__images")
+      .doc(photo.id);
+
+    if (photo.likesCount) {
+      collectionRef.set(
+        {
+          likesCount: photo.likesCount + 1,
+          lastUpdate: timestamp(),
+          likedBy: [...photo.likedBy, user.uid],
+        },
+        { merge: true }
+      );
+    } else {
+      collectionRef.set(
+        {
+          likesCount: 1,
+          lastUpdate: timestamp(),
+          likedBy: [user.uid],
+        },
+        { merge: true }
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      const likedBy = new Set(photo.likedBy);
+      setLiked(likedBy.has(user.uid));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   return (
     <div key={photo.id} className="photoGrid__item">
       <div className="imageInfo">
@@ -48,8 +81,20 @@ const PhotoGridItem = ({ photo }) => {
           <img src={userPhoto} alt="avatar" />
           <span>{CapitalizeFirst(photo.uploadedBy)}</span>
         </div>
-        <div className="imageInfo__button">
-          <IoIosHeartEmpty />
+
+        <div
+          className="imageInfo__button"
+          onClick={() => {
+            if (!liked) {
+              addLikes();
+              setLiked(true);
+            } else {
+              alert("you already liked the post");
+            }
+          }}
+        >
+          {photo.likesCount > 0 ? <IoIosHeart /> : <IoIosHeartEmpty />}
+          {photo.likesCount}
         </div>
       </div>
       <img
@@ -62,60 +107,14 @@ const PhotoGridItem = ({ photo }) => {
       />
 
       {modalOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="photoModal"
-        >
-          <motion.div
-            initial={{ y: "-100vh" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100vh" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="photoModal__Content"
-          >
-            <img src={photo.imageUrl} alt={photo.imageName} />
-
-            <div className="photoModal__title">
-              <img
-                className="photoModal__avatar"
-                src={userPhoto}
-                alt="avatar"
-              />
-              <span className="photoModal__titleText">
-                <h2>{photo.imageName}</h2>
-                <span>
-                  <IoMdPerson />
-                  <span>{photo.uploadedBy}</span>
-                </span>
-
-                <span className="photoModal__camSetting">
-                  <IoMdCamera />
-                  <span>
-                    <small>{photo.imageCamSetting}</small>
-                  </span>
-                </span>
-              </span>
-            </div>
-
-            <span className="photoModal__imageDescription">
-              <strong>{photo.uploadedBy}</strong>
-              <span>{photo.imageDesc}</span>
-            </span>
-
-            <div
-              className="photoModal__closeButton"
-              onClick={() => {
-                setModalOpen(false);
-                document.body.style.overflowY = "";
-              }}
-            >
-              <IoMdArrowRoundBack />
-            </div>
-          </motion.div>
-        </motion.div>
+        <PhotoModal
+          photo={photo}
+          userPhoto={userPhoto}
+          setModalOpen={setModalOpen}
+          liked={liked}
+          setLiked={setLiked}
+          addLikes={addLikes}
+        />
       )}
     </div>
   );
