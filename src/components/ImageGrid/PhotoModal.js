@@ -17,16 +17,7 @@ const PhotoModal = ({
   addLikes,
   setLiked,
 }) => {
-  const [, setEditPost] = useState(false);
   const user = useContext(UserContext);
-
-  useEffect(() => {
-    if (user.uid === photo.userUid) {
-      setEditPost(true);
-      console.log(user.uid, photo.userUid);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <motion.div
@@ -64,11 +55,15 @@ const PhotoModal = ({
           <div
             className="editPostBtn btn"
             onClick={() => {
-              if (!liked) {
-                addLikes();
-                setLiked(true);
+              if (user) {
+                if (!liked) {
+                  addLikes();
+                  setLiked(true);
+                } else {
+                  alert("you already liked the post");
+                }
               } else {
-                alert("you already liked the post");
+                alert("log in to like this photo");
               }
             }}
           >
